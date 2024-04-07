@@ -118,26 +118,26 @@ export default function RegistPengajuan({ title, auth, data }) {
                             </tbody>
                         ))}
                     </table>
-                    <div className="flex justify-normal items-center py-5">
+                    <div className="flex justify-center items-center py-5">
                         <ReactPaginate
-                            className="flex flex-row gap-1 w-full justify-end items-center select-none pr-10"
-                            nextLabel=">"
+                            className="flex flex-row gap-1 w-full justify-center items-center select-none pr-10"
+                            nextLabel="Next"
                             onPageChange={handlePageClick}
                             pageRangeDisplayed={2}
                             marginPagesDisplayed={1}
                             pageCount={pageCount}
-                            previousLabel="<"
+                            previousLabel="Previous"
                             pageClassName=" text-sm border  p-2 rounded-md "
                             pageLinkClassName=" rounded-md  px-2 py-2 font-semibold font-roboto"
-                            previousClassName=" p-2 rounded-md text-teal-600 hover:scale-125 hover:scale text-xl"
-                            previousLinkClassName="text-xl p-2  font-semibold font-roboto"
-                            nextClassName=" p-2 rounded-md text-teal-600 hover:scale-125 hover:scale text-xl"
-                            nextLinkClassName="text-xl p-2  font-semibold font-roboto "
+                            previousClassName=" p-2 rounded-md bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
+                            previousLinkClassName="text-xs p-2  font-semibold font-roboto"
+                            nextClassName=" p-2 rounded-md bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
+                            nextLinkClassName="text-xs p-2  font-semibold font-roboto "
                             breakLabel="..."
                             breakClassName=" p-2 rounded-md text-teal-600"
                             breakLinkClassName="text-sm font-semibold font-roboto "
                             containerClassName="pagination"
-                            activeClassName="bg-transparan border border-teal-600 text-teal-600"
+                            activeClassName="bg-transparan border border-yellow-600 text-yellow-600"
                         />
                     </div>
                 </div>
