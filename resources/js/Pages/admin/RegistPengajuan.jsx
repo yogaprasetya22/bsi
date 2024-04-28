@@ -7,6 +7,7 @@ import "moment/locale/id";
 moment.locale("id");
 
 export default function RegistPengajuan({ title, auth, data }) {
+    console.log(data);
     const [itemOffset, setItemOffset] = useState(0);
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);

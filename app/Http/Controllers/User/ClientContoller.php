@@ -17,10 +17,10 @@ class ClientContoller extends Controller
      */
     public function index()
     {
-        $user = User::with(['role'])->latest()->get();
+        $pengajuan = Pengajuan::with(['user', 'status', 'feedback'])->where('user_id', Auth::user()->id)->latest()->get();
         return Inertia::render('client/Index', [
             'title' => 'User',
-            'data' => $user,
+            'data' => $pengajuan,
         ]);
     }
     public function pengajuan()
@@ -44,7 +44,9 @@ class ClientContoller extends Controller
 
     public function feedback()
     {
-        $feedback = FeedbackPengajuan::with(['pengajuan.user', 'pengajuan.status'])->latest()->get();
+        $feedback = FeedbackPengajuan::with(['pengajuan.user', 'pengajuan.status'])->whereHas('pengajuan', function ($query) {
+            $query->where('user_id', Auth::user()->id);
+        })->latest()->get();
         return Inertia::render('client/Feedback', [
             'title' => 'Feedback',
             'data' => $feedback,

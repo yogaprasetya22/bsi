@@ -43,10 +43,6 @@ export default function History({ title, auth, data }) {
         <Layout title={title} user={auth?.user}>
             <Update data={dataModal} />
             <div className="flex flex-col gap-5 rounded-xl ">
-                {/* head */}
-                <div className="flex justify-between items-center px-5 py-1">
-                    <h1 className="text-2xl font-semibold">Regist Pengajuan</h1>
-                </div>
                 <div className="overflow-x-auto bg-white p-2 shadow rounded-md">
                     <table className="table border">
                         <thead className="bg-teal-600">

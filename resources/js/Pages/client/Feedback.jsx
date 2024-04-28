@@ -12,6 +12,11 @@ export default function Feedback({ title, auth, data }) {
     const [pageCount, setPageCount] = useState(0);
     const [Loading, setLoading] = useState(false);
     const [page, setPage] = useState(5);
+
+    const [dataModal, setDataModal] = useState([]);
+
+    console.log(dataModal);
+
     useEffect(() => {
         setLoading(true);
         const endOffset = parseInt(itemOffset) + parseInt(page);
@@ -38,10 +43,8 @@ export default function Feedback({ title, auth, data }) {
 
     return (
         <Layout title={title} user={auth?.user}>
+            {dataModal && <FeedbackModal data={dataModal} />}
             <div className="flex flex-col gap-5 rounded-xl">
-                <div className="flex justify-between items-center px-5 py-1">
-                    <h1 className="text-2xl font-semibold">Regist Pengajuan</h1>
-                </div>
                 <div className="overflow-x-auto bg-white p-2 shadow rounded-md">
                     <table className="table border">
                         <thead className="bg-teal-600">
@@ -70,7 +73,7 @@ export default function Feedback({ title, auth, data }) {
                             <tbody key={index} className="">
                                 <tr>
                                     <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        {item.pengajuan.no_surat}
+                                        {item.pengajuan?.no_surat}
                                     </td>
                                     <td className="border-x text-xs font-medium text-gray-500  tracking-wider text-center">
                                         {item.pengajuan.keterangan}
@@ -102,12 +105,12 @@ export default function Feedback({ title, auth, data }) {
                                         <button
                                             onClick={() => {
                                                 window.my_modal_1.show();
+                                                setDataModal(item);
                                             }}
                                             className="btn "
                                         >
                                             <i className="bi bi-eye"></i>
                                         </button>
-                                        <FeedbackModal data={item} />
                                     </td>
                                 </tr>
                             </tbody>

@@ -13,6 +13,7 @@ export default function AproveModal({ data: data_regist }) {
         status: "",
         file: "",
         feedback: "",
+        pic: "",
     });
 
     useEffect(() => {
@@ -20,6 +21,7 @@ export default function AproveModal({ data: data_regist }) {
             uuid: data_regist?.uuid,
             status: data_regist?.status?.id,
             feedback: data_regist?.feedback?.feedback || "",
+            pic: data_regist?.feedback?.pic || "",
         });
     }, [data_regist]);
 
@@ -62,15 +64,6 @@ export default function AproveModal({ data: data_regist }) {
                     <div className="w-full flex justify-between">
                         <table className="w-full mt-4">
                             <tbody>
-                                <tr className="border-b">
-                                    <td className="py-2 text-teal-500">
-                                        Nama PIC
-                                    </td>
-                                    <td className="pr-2">:</td>
-                                    <td className="py-2">
-                                        {data_regist?.user?.name}
-                                    </td>
-                                </tr>
                                 <tr className="border-b">
                                     <td className="py-2 text-teal-500">
                                         No Surat
@@ -175,17 +168,31 @@ export default function AproveModal({ data: data_regist }) {
                             )}
                         </div>
                     </div>
-                    <div className="w-full">
-                        <textarea
-                            name="feedback"
-                            id="feedback"
-                            className="w-full border border-gray-300 rounded-md p-2"
-                            placeholder="Feedback"
-                            value={data.feedback}
-                            onChange={(e) => {
-                                setData("feedback", e.target.value);
-                            }}
-                        ></textarea>
+                    <div className="w-full flex flex-row gap-5">
+                        <div className="w-full">
+                            <textarea
+                                name="feedback"
+                                id="feedback"
+                                className="w-full border border-gray-300 rounded-md p-2"
+                                placeholder="Feedback"
+                                value={data.feedback}
+                                onChange={(e) => {
+                                    setData("feedback", e.target.value);
+                                }}
+                            ></textarea>
+                        </div>
+                        <div className="w-full">
+                            <textarea
+                                name="pic"
+                                id="pic"
+                                className="w-full border border-gray-300 rounded-md p-2"
+                                placeholder="Pic"
+                                value={data.pic}
+                                onChange={(e) => {
+                                    setData("pic", e.target.value);
+                                }}
+                            ></textarea>
+                        </div>
                     </div>
                     {data_regist?.status?.id && (
                         <StatusVerifikasi data_status={data_regist.status.id} />

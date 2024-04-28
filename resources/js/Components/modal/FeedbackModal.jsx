@@ -5,10 +5,9 @@ moment.locale("id");
 import { StatusVerifikasi } from "../StatusVerifikasi";
 
 export default function FeedbackModal({ data: data_feedback }) {
-    console.log(data_feedback);
     return (
-        <dialog id="my_modal_1" className="modal backdrop-blur-sm">
-            <div className="modal-box w-11/12 max-w-3xl overflow">
+        <dialog id="my_modal_1" className="modal backdrop-blur-sm backdrop-brightness-90">
+            <div className="modal-box w-11/12 max-w-4xl overflow">
                 <div className=" absolute top-0 right-0">
                     <button
                         onClick={() => window.my_modal_1.close()}
@@ -31,7 +30,7 @@ export default function FeedbackModal({ data: data_feedback }) {
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
-                                        {data_feedback?.pengajuan.no_surat}
+                                        {data_feedback?.pengajuan?.no_surat}
                                     </td>
                                 </tr>
                                 <tr className="border-b">
@@ -40,36 +39,104 @@ export default function FeedbackModal({ data: data_feedback }) {
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
-                                        {data_feedback?.pengajuan.keterangan}
+                                        {data_feedback?.pengajuan?.keterangan}
                                     </td>
                                 </tr>
                                 <tr className="border-b">
                                     <td className="py-2 text-teal-500">
-                                        Tanggal Surat
+                                        Tgl Surat
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
                                         {moment(
                                             data_feedback?.pengajuan
-                                                .tanggal_surat
+                                                ?.tanggal_surat
                                         ).format("DD MMMM YYYY")}
                                     </td>
                                 </tr>
                                 <tr className="border-b">
                                     <td className="py-2 w-[8rem] text-teal-500">
-                                        Tanggal Terima
+                                        Tgl Terima
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
                                         {moment(
                                             data_feedback?.pengajuan
-                                                .tanggal_terima
+                                                ?.tanggal_terima
                                         ).format("DD MMMM YYYY")}
                                     </td>
                                 </tr>
                                 <tr className="border-b">
                                     <td className="py-2 w-[8rem] text-teal-500">
-                                        File
+                                        My File
+                                    </td>
+                                    <td className="pr-2">:</td>
+                                    <td className="py-2">
+                                        {data_feedback?.file ? (
+                                            <button
+                                                className="hover:text-teal-500 p-2 hover:border-b-2 border-teal-500"
+                                                onClick={() =>
+                                                    window.open(
+                                                        `${window.location.origin}/uploads/feedback/${data_feedback?.pengajuan.no_surat}/${data_feedback?.file}`,
+                                                        "_blank"
+                                                    )
+                                                }
+                                            >
+                                                <i className="bi bi-file-earmark-text"></i>
+                                            </button>
+                                        ) : (
+                                            <p className="text-red-500">
+                                                Belum ada file
+                                            </p>
+                                        )}
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                        <table className="w-full mt-4">
+                            <tbody>
+                                <tr className="border-b">
+                                    <td className="py-2 text-teal-500">
+                                        Status
+                                    </td>
+                                    <td className="pr-2">:</td>
+                                    <td className="py-2">
+                                        {
+                                            data_feedback?.pengajuan?.status
+                                                .name_status
+                                        }
+                                    </td>
+                                </tr>
+                                <tr className="border-b">
+                                    <td className="py-2 text-teal-500">
+                                        Feedback
+                                    </td>
+                                    <td className="pr-2">:</td>
+                                    <td className="py-2">
+                                        {data_feedback?.pengajuan?.keterangan}
+                                    </td>
+                                </tr>
+                                <tr className="border-b">
+                                    <td className="py-2 text-teal-500">Pic</td>
+                                    <td className="pr-2">:</td>
+                                    <td className="py-2">
+                                        {data_feedback?.pic}
+                                    </td>
+                                </tr>
+                                <tr className="border-b">
+                                    <td className="py-2 w-[8rem] text-teal-500">
+                                        Tgl Feedback
+                                    </td>
+                                    <td className="pr-2">:</td>
+                                    <td className="py-2">
+                                        {moment(
+                                            data_feedback?.updated_at
+                                        ).format("DD MMMM YYYY")}
+                                    </td>
+                                </tr>
+                                <tr className="border-b">
+                                    <td className="py-2 w-[8rem] text-teal-500">
+                                        Feedback File
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
@@ -96,7 +163,7 @@ export default function FeedbackModal({ data: data_feedback }) {
                         </table>
                     </div>
                     <StatusVerifikasi
-                        data_status={data_feedback?.pengajuan.status.id}
+                        data_status={data_feedback?.pengajuan?.status.id}
                     />
                 </div>
             </div>

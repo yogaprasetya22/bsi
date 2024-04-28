@@ -23,6 +23,7 @@ class Pengajuan extends Model
         'file',
         'tanggal_surat',
         'tanggal_terima',
+        'created_at'
     ];
 
 

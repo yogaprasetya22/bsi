@@ -38,6 +38,17 @@ class DatabaseSeeder extends Seeder
             'created_at' => now(),
         ]);
 
+        for ($i = 0; $i < 10; $i++) {
+            User::create([
+                'uuid' => str()->uuid(),
+                'name' => 'client' . $i,
+                'email' => 'client' . $i . '@gmail.com',
+                'password' => bcrypt('asdasdasd'),
+                'role_id' => 2,
+                'created_at' => now(),
+            ]);
+        }
+
         User::create([
             'uuid' => str()->uuid(),
             'name' => 'superadmin',

@@ -16,6 +16,7 @@ return new class extends Migration
             $table->uuid('pengajuan_uuid')->constrained('pengajuans');
             $table->foreign('pengajuan_uuid')->references('uuid')->on('pengajuans')->onDelete('cascade');
             $table->string('feedback')->nullable();
+            $table->string('pic')->nullable();
             $table->string('file')->nullable();
             $table->date('tanggal_feedback');
             $table->timestamps();

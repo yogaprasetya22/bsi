@@ -13,10 +13,12 @@ class AdminController extends Controller
 {
     public function index()
     {
-        $user = User::with(['role'])->latest()->get();
+        $pengajuan = Pengajuan::with(['user', 'status', 'feedback'])->latest()->get();
+        $pengajuan_bulan_ini = Pengajuan::with(['user', 'status', 'feedback'])->whereMonth('created_at', date('m'))->latest()->get();
         return Inertia::render('admin/Admin', [
             'title' => 'Admin',
-            'data' => $user,
+            'data' => $pengajuan,
+            'pengajuan_bulan_ini' => $pengajuan_bulan_ini
         ]);
     }
 
