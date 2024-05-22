@@ -129,7 +129,7 @@ export default function Update({ data: data_regist }) {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-500">
-                            Create owner
+                            Update Laporan
                         </h1>
                     </div>
                     <form

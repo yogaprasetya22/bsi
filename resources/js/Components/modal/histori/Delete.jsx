@@ -51,7 +51,7 @@ export default function Delete({ id }) {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-500">
-                            Delete Histori
+                            Delete Laporan
                         </h1>
                     </div>
                     <form
@@ -60,7 +60,7 @@ export default function Delete({ id }) {
                     >
                         <div className="flex w-full justify-center">
                             <p className="text-xl font-extrabold text-indigo-600/90">
-                                Anda yakin ingin menghapus owner ini?
+                                Anda yakin ingin menghapus data ini?
                             </p>
                         </div>
                         <div className="flex items-center justify-end mt-4">
