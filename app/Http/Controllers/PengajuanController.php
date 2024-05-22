@@ -96,6 +96,10 @@ class PengajuanController extends Controller
         $request->validate([
             'uuid' => 'required',
             'status' => 'required',
+            'pic' => 'required',
+        ], [
+            'status.required' => 'Status harus diisi',
+            'pic.required' => 'PIC harus diisi',
         ]);
 
         $pengajuan = Pengajuan::with('feedback')->where('uuid', $request->uuid)->first();
@@ -113,6 +117,7 @@ class PengajuanController extends Controller
                     'pengajuan_uuid' => $pengajuan->uuid,
                     'feedback' => $request->feedback,
                     'file' => $renameFile,
+                    'pic' => $request->pic,
                     'tanggal_feedback' => date('Y-m-d'),
                 ]);
             } else {
@@ -145,6 +150,7 @@ class PengajuanController extends Controller
                     'pengajuan_uuid' => $pengajuan->uuid,
                     'feedback' => $request->feedback,
                     'file' => null,
+                    'pic' => $request->pic,
                     'tanggal_feedback' => date('Y-m-d'),
                 ]);
             } else {
@@ -165,6 +171,7 @@ class PengajuanController extends Controller
                     'pengajuan_uuid' => $pengajuan->uuid,
                     'feedback' => null,
                     'file' => null,
+                    'pic' => $request->pic,
                     'tanggal_feedback' => date('Y-m-d'),
                 ]);
             }

@@ -5,6 +5,7 @@ moment.locale("id");
 import React, { useEffect } from "react";
 import { useForm, usePage } from "@inertiajs/react";
 import { StatusVerifikasi } from "../StatusVerifikasi";
+import InputError from "../ui/InputError";
 
 export default function AproveModal({ data: data_regist }) {
     const [changeFile, setChangeFile] = React.useState(false);
@@ -15,6 +16,8 @@ export default function AproveModal({ data: data_regist }) {
         feedback: "",
         pic: "",
     });
+
+    console.log(data_regist);
 
     useEffect(() => {
         setData({
@@ -40,7 +43,7 @@ export default function AproveModal({ data: data_regist }) {
         post(route("admin.pengajuan_status"), {
             onSuccess: () => {
                 window.my_modal_3.close();
-                reset();
+                window.location.reload();
             },
             onError: (error) => console.log(error),
         });
@@ -117,22 +120,25 @@ export default function AproveModal({ data: data_regist }) {
                         </table>
                     </div>
                     <div className="flex flex-row gap-2 w-full">
-                        <select
-                            className="w-full p-2 border border-gray-300 rounded-md"
-                            name="status"
-                            id="status"
-                            onChange={(e) => {
-                                setData("status", e.target.value);
-                            }}
-                            value={data.status}
-                        >
-                            <option value="">Pilih Status</option>
-                            {status.map((item, index) => (
-                                <option key={index} value={item.id}>
-                                    {item.name_status}
-                                </option>
-                            ))}
-                        </select>
+                        <div className="flex flex-col gap-2 w-full justify-center">
+                            <select
+                                className="w-full p-2 border border-gray-300 rounded-md"
+                                name="status"
+                                id="status"
+                                onChange={(e) => {
+                                    setData("status", e.target.value);
+                                }}
+                                value={data.status}
+                            >
+                                <option value="">Pilih Status</option>
+                                {status.map((item, index) => (
+                                    <option key={index} value={item.id}>
+                                        {item.name_status}
+                                    </option>
+                                ))}
+                            </select>
+                            <InputError message={errors.status} />
+                        </div>
                         <div className="flex flex-col gap-2 w-full">
                             {changeFile ? (
                                 <div className="w-full max-w-xs border border-yellow-500 h-[3rem] rounded-md flex flex-row justify-between">
@@ -181,17 +187,20 @@ export default function AproveModal({ data: data_regist }) {
                                 }}
                             ></textarea>
                         </div>
-                        <div className="w-full">
-                            <textarea
-                                name="pic"
-                                id="pic"
-                                className="w-full border border-gray-300 rounded-md p-2"
-                                placeholder="Pic"
-                                value={data.pic}
-                                onChange={(e) => {
-                                    setData("pic", e.target.value);
-                                }}
-                            ></textarea>
+                        <div className="flex flex-col gap-2 w-full">
+                            <div className="w-full">
+                                <textarea
+                                    name="pic"
+                                    id="pic"
+                                    className="w-full border border-gray-300 rounded-md p-2"
+                                    placeholder="Pic"
+                                    value={data.pic}
+                                    onChange={(e) => {
+                                        setData("pic", e.target.value);
+                                    }}
+                                ></textarea>
+                                <InputError message={errors.pic} />
+                            </div>
                         </div>
                     </div>
                     {data_regist?.status?.id && (

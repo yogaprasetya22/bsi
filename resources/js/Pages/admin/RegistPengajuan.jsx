@@ -12,7 +12,6 @@ export default function RegistPengajuan({ title, auth, data }) {
     const [pageCount, setPageCount] = useState(0);
     const [Loading, setLoading] = useState(false);
     const [page, setPage] = useState(5);
-
     const [dataModal, setDataModal] = useState([]);
 
     useEffect(() => {
@@ -67,6 +66,9 @@ export default function RegistPengajuan({ title, auth, data }) {
                                     File
                                 </th>
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
+                                    Status
+                                </th>
+                                <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
                                     Action
                                 </th>
                             </tr>
@@ -102,6 +104,33 @@ export default function RegistPengajuan({ title, auth, data }) {
                                         >
                                             <i className="bi bi-file-earmark-text"></i>
                                         </button>
+                                    </td>
+                                    <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
+                                        {item.status.id == 1 && (
+                                            <p className="bg-yellow-500 text-white p-1 rounded-md">
+                                                {item.status.name_status}
+                                            </p>
+                                        )}
+                                        {item.status.id == 2 && (
+                                            <p className="bg-teal-500 text-white p-1 rounded-md">
+                                                {item.status.name_status}
+                                            </p>
+                                        )}
+                                        {item.status.id == 3 && (
+                                            <p className="bg-blue-500 text-white p-1 rounded-md">
+                                                {item.status.name_status}
+                                            </p>
+                                        )}
+                                        {item.status.id == 4 && (
+                                            <p className="bg-green-500 text-white p-1 rounded-md">
+                                                {item.status.name_status}
+                                            </p>
+                                        )}
+                                        {item.status.id == 5 && (
+                                            <p className="bg-red-500 text-white p-1 rounded-md">
+                                                {item.status.name_status}
+                                            </p>
+                                        )}
                                     </td>
                                     <td className="border-x text-xs font-medium text-gray-500 flex justify-center ">
                                         <button
