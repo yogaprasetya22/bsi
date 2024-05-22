@@ -47,7 +47,7 @@ export default function AproveModal({ data: data_regist }) {
     };
     return (
         <dialog id="my_modal_3" className="modal backdrop-blur-sm">
-            <div className="modal-box w-11/12 max-w-3xl overflow">
+            <div className="modal-box w-11/12 max-w-3xl overflow bg-white">
                 <div className=" absolute top-0 right-0">
                     <button
                         onClick={() => window.my_modal_3.close()}

@@ -6,8 +6,11 @@ import { StatusVerifikasi } from "../StatusVerifikasi";
 
 export default function FeedbackModal({ data: data_feedback }) {
     return (
-        <dialog id="my_modal_1" className="modal backdrop-blur-sm backdrop-brightness-90">
-            <div className="modal-box w-11/12 max-w-4xl overflow">
+        <dialog
+            id="my_modal_1"
+            className="modal backdrop-blur-sm backdrop-brightness-90"
+        >
+            <div className="modal-box w-11/12 max-w-4xl overflow bg-white">
                 <div className=" absolute top-0 right-0">
                     <button
                         onClick={() => window.my_modal_1.close()}

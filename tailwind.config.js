@@ -19,7 +19,7 @@ export default {
     },
     darkMode: "class",
     daisyui: {
-        themes: ["nord"],
+        themes: ["cmyk"],
     },
 
     plugins: [forms, require("daisyui")],

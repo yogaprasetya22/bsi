@@ -52,7 +52,7 @@ export default function Add({ value }) {
             id="my_modal_2"
             className="modal backdrop-blur-sm backdrop-brightness-75"
         >
-            <div className="modal-box w-full max-w-2xl overflow">
+            <div className="modal-box w-full max-w-2xl overflow bg-white">
                 <div className=" absolute top-0 right-0">
                     <button
                         onClick={() => window.my_modal_2.close()}
