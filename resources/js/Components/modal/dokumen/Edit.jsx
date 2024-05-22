@@ -5,38 +5,54 @@ import React from "react";
 import { useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 
-export default function Update({ data: data_user }) {
-    const { data, setData, put, processing, errors, reset } = useForm({
-        uuid: data_user.uuid,
-        name: "",
-        email: "",
-        password: "",
+export default function Add({ value }) {
+    const { data, setData, post, processing, errors, reset } = useForm({
+        id: value.id,
+        title: "",
+        keterangan: "",
+        file: null, // file should be initialized as null
     });
+
     useEffect(() => {
         setData({
-            uuid: data_user.uuid,
-            name: data_user.name,
-            email: data_user.email,
+            id: value.id,
+            title: value.title,
+            keterangan: value.keterangan,
         });
-    }, [data_user]);
+    }, [value]);
 
-    const handleUpdateUser = (e) => {
+    const handleChange = (e) => {
+        setData(e.target.name, e.target.value);
+    };
+
+    const handleFileChange = (e) => {
+        setData("file", e.target.files[0]); // save the selected file to the state
+    };
+
+    const handleAddAdmin = (e) => {
         e.preventDefault();
-        put(route("superadmin.user.update"), {
+        const formData = new FormData();
+        formData.append("id", data.id || value.id);
+        formData.append("title", data.title || value.title);
+        formData.append("keterangan", data.keterangan || value.keterangan);
+        if (data.file) {
+            formData.append("file", data.file);
+        }
+        post(route("admin.document.edit"), {
+            data: formData, // pass formData here
             preserveScroll: true,
             onSuccess: () => {
-                window.my_modal_2.close();
                 reset();
+                window.my_modal_2.close();
             },
         });
     };
-
     return (
         <dialog
             id="my_modal_2"
             className="modal backdrop-blur-sm backdrop-brightness-75"
         >
-            <div className="modal-box w-full max-w-2xl overflow bg-white">
+            <div className="modal-box w-full max-w-2xl overflow">
                 <div className=" absolute top-0 right-0">
                     <button
                         onClick={() => window.my_modal_2.close()}
@@ -49,77 +65,63 @@ export default function Update({ data: data_user }) {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-500">
-                            Update User
+                            Edit Document
                         </h1>
                     </div>
                     <form
                         className="flex flex-col gap-5"
-                        onSubmit={handleUpdateUser}
+                        onSubmit={handleAddAdmin}
                     >
                         <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-5 w-full">
                                 <div className="flex flex-col gap-2 w-full">
-                                    <InputLabel
-                                        htmlFor="update_name"
-                                        value="Name"
-                                    />
+                                    <InputLabel htmlFor="title" value="title" />
                                     <TextInput
-                                        id="update_name"
+                                        id="title"
                                         type="text"
-                                        name="update_name"
-                                        value={data.name}
+                                        name="title"
+                                        value={data.title}
                                         className="mt-1 block w-full"
-                                        autoComplete="name"
+                                        autoComplete="title"
                                         isFocused={true}
-                                        onChange={(e) =>
-                                            setData("name", e.target.value)
-                                        }
+                                        onChange={handleChange}
                                     />
                                     <InputError
-                                        message={errors.name}
+                                        message={errors.title}
                                         className="mt-2"
                                     />
                                 </div>
                                 <div className="flex flex-col gap-2 w-full">
                                     <InputLabel
-                                        htmlFor="update_email"
-                                        value="Email"
+                                        htmlFor="keterangan"
+                                        value="keterangan"
                                     />
                                     <TextInput
-                                        id="update_email"
-                                        type="email"
-                                        name="update_email"
-                                        value={data.email}
+                                        id="keterangan"
+                                        type="text"
+                                        name="keterangan"
+                                        value={data.keterangan}
                                         className="mt-1 block w-full"
-                                        autoComplete="email"
-                                        onChange={(e) =>
-                                            setData("email", e.target.value)
-                                        }
+                                        autoComplete="keterangan"
+                                        onChange={handleChange}
                                     />
                                     <InputError
-                                        message={errors.email}
+                                        message={errors.keterangan}
                                         className="mt-2"
                                     />
                                 </div>
                             </div>
                             <div className="flex flex-col gap-2 w-full">
-                                <InputLabel
-                                    htmlFor="update_password"
-                                    value="Password"
-                                />
+                                <InputLabel htmlFor="file" value="file" />
                                 <TextInput
-                                    id="update_password"
-                                    type="password"
-                                    name="update_password"
-                                    value={data.password}
-                                    className="mt-1 block w-full"
-                                    autoComplete="password"
-                                    onChange={(e) =>
-                                        setData("password", e.target.value)
-                                    }
+                                    id="file"
+                                    type="file"
+                                    name="file"
+                                    className="file-input file-input-ghost w-full"
+                                    onChange={handleFileChange}
                                 />
                                 <InputError
-                                    message={errors.password}
+                                    message={errors.file}
                                     className="mt-2"
                                 />
                             </div>
@@ -129,7 +131,7 @@ export default function Update({ data: data_user }) {
                                 type="submit"
                                 className="btn bg-indigo-600/90 text-white"
                             >
-                                {processing ? "Loading..." : "Update"}
+                                {processing ? "Loading..." : "Edit"}
                             </button>
                         </div>
                     </form>

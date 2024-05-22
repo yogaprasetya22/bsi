@@ -22,7 +22,7 @@ export default function Update({ data: data_user }) {
 
     const handleUpdateUser = (e) => {
         e.preventDefault();
-        put(route("superadmin.user.update"), {
+        put(route("superadmin.admin.update"), {
             preserveScroll: true,
             onSuccess: () => {
                 window.my_modal_2.close();
@@ -49,7 +49,7 @@ export default function Update({ data: data_user }) {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-500">
-                            Update User
+                            Update Admin
                         </h1>
                     </div>
                     <form

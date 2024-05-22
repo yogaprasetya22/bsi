@@ -118,7 +118,7 @@ export default function Form() {
     }, [data.keterangan]);
 
     return (
-        <div className="w-full bg-gray-100 p-5 rounded-lg shadow-md">
+        <div className="w-full bg-white p-5 rounded-lg shadow-sh-box border-2">
             {/* form berisi no surat, keterangan, tanggal surat, terima */}
             <form onSubmit={submitForm} className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">

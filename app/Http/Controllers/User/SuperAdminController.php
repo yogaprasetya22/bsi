@@ -12,10 +12,12 @@ class SuperAdminController extends Controller
 {
     public function index()
     {
-        $user = User::with(['role'])->latest()->get();
+        $pengajuan = Pengajuan::with(['user', 'status', 'feedback'])->latest()->get();
+        $pengajuan_bulan_ini = Pengajuan::with(['user', 'status', 'feedback'])->whereMonth('created_at', date('m'))->latest()->get();
         return Inertia::render('superadmin/Index', [
             'title' => 'Superadmin',
-            'data' => $user,
+            'data' => $pengajuan,
+            'pengajuan_bulan_ini' => $pengajuan_bulan_ini
         ]);
     }
 
@@ -28,50 +30,29 @@ class SuperAdminController extends Controller
         ]);
     }
 
+    public function user()
+    {
+        $user = User::with(['role'])->where('role_id', 2)->latest()->get();
+        return Inertia::render('superadmin/User', [
+            'title' => 'User',
+            'data' => $user,
+        ]);
+    }
+
+    public function admin()
+    {
+        $user = User::with(['role'])->where('role_id', 1)->latest()->get();
+        return Inertia::render('superadmin/Admin', [
+            'title' => 'Admin',
+            'data' => $user,
+        ]);
+    }
+
+
     /**
      * Show the form for creating a new resource.
      */
     public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
     {
         //
     }

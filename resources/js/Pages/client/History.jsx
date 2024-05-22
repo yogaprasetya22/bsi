@@ -43,8 +43,8 @@ export default function History({ title, auth, data }) {
         <Layout title={title} user={auth?.user}>
             <Update data={dataModal} />
             <div className="flex flex-col gap-5 rounded-xl ">
-                <div className="overflow-x-auto bg-white p-2 shadow rounded-md">
-                    <table className="table border">
+                <div className="overflow-x-auto bg-white p-2 rounded-md">
+                    <table className="table shadow-sh-box border-2">
                         <thead className="bg-teal-600">
                             <tr className="font-bold  text-lg text-white">
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
@@ -129,15 +129,15 @@ export default function History({ title, auth, data }) {
                             previousLabel="Previous"
                             pageClassName=" text-sm border  p-2 rounded-md "
                             pageLinkClassName=" rounded-md  px-2 py-2 font-semibold font-roboto"
-                            previousClassName=" p-2 rounded-md bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
+                            previousClassName=" p-2 rounded-md shadow-sh-box-sm bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
                             previousLinkClassName="text-xs p-2  font-semibold font-roboto"
-                            nextClassName=" p-2 rounded-md bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
+                            nextClassName=" p-2 rounded-md shadow-sh-box-sm bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
                             nextLinkClassName="text-xs p-2  font-semibold font-roboto "
                             breakLabel="..."
                             breakClassName=" p-2 rounded-md text-teal-600"
                             breakLinkClassName="text-sm font-semibold font-roboto "
                             containerClassName="pagination"
-                            activeClassName="bg-transparan border border-yellow-600 text-yellow-600"
+                            activeClassName=" bg-transparan border border-yellow-600 text-yellow-600"
                         />
                     </div>
                 </div>

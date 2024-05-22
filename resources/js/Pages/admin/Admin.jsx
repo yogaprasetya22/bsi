@@ -22,9 +22,9 @@ export default function Admin({ title, auth, data }) {
 
     return (
         <Layout title={title} user={auth?.user}>
-            <div className="flex flex-row gap-2">
+            <div className="flex flex-row gap-2 mb-10">
                 <div className="w-[46%] flex flex-row flex-wrap gap-2 ">
-                    <div className="w-full bg-teal-500 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2 gap-4">
+                    <div className="shadow-sh-box-sm w-full bg-teal-500 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2 gap-4">
                         <div
                             className="bg-white p-2 flex flex-col justify-center items-center pr-6 shadow-2xl"
                             style={{
@@ -62,7 +62,7 @@ export default function Admin({ title, auth, data }) {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-teal-400/90 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
+                    <div className="shadow-sh-box-sm w-full bg-teal-400/90 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
                         <div
                             className="bg-white p-2 flex flex-col justify-center items-center pr-6 shadow-2xl"
                             style={{
@@ -100,7 +100,7 @@ export default function Admin({ title, auth, data }) {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-teal-400/90 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
+                    <div className="shadow-sh-box-sm w-full bg-teal-400/90 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
                         <div
                             className="bg-white p-2 flex flex-col justify-center items-center pr-6 shadow-2xl"
                             style={{
@@ -138,7 +138,7 @@ export default function Admin({ title, auth, data }) {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-teal-300 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
+                    <div className="shadow-sh-box-sm w-full bg-teal-300 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
                         <div
                             className="bg-white p-2 flex flex-col justify-center items-center pr-6 shadow-2xl"
                             style={{
@@ -176,7 +176,7 @@ export default function Admin({ title, auth, data }) {
                             </p>
                         </div>
                     </div>
-                    <div className="w-full bg-teal-300/70 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
+                    <div className="shadow-sh-box-sm w-full bg-teal-300/70 flex flex-row items-center text-white font-semibold text-lg rounded-md p-2">
                         <div
                             className="bg-white p-2 flex flex-col justify-center items-center pr-6 shadow-2xl"
                             style={{
@@ -216,13 +216,13 @@ export default function Admin({ title, auth, data }) {
                     </div>
                 </div>
                 <div className="w-[60%] flex flex-col gap-3">
-                    <div className="h-[70vh] flex justify-center items-start  p-5 relative pt-10">
+                    <div className="h-[70vh] flex justify-center rounded-lg items-start  p-5 relative pt-10 border-2 shadow-sh-box">
                         <h1 className="text-2xl text-gray-700 font-semibold absolute top-0 w-full text-center">
                             Analisis Pengajuan
                         </h1>
                         <Charts data={data} />
                     </div>
-                    <div className="w-full h-full  rounded-md p-5 shadow-md flex flex-col">
+                    <div className="w-full h-full  rounded-md p-5 shadow-lg flex flex-col shadow-sh-box border-2">
                         {/* keterangan tentang aplikasi pengajuan berkas */}
                         <div className="flex w-full justify-between">
                             <h1 className="text-2xl font-semibold text-gray-700">

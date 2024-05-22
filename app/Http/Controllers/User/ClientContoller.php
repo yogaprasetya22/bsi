@@ -77,7 +77,27 @@ class ClientContoller extends Controller
      */
     public function store(Request $request)
     {
-        //
+        // buatkan create user validation
+        $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'password' => 'required',
+        ], [
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+            'password.required' => 'Password harus diisi',
+        ]);
+
+        User::create([
+            'uuid' => str()->uuid(),
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+            'role_id' => '2',
+            'created_at' => now(),
+        ]);
+
+        return redirect()->back()->with('success', 'User berhasil ditambahkan');
     }
 
     /**
@@ -99,16 +119,39 @@ class ClientContoller extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // buatkan update user validation
+        $request->validate([
+            'uuid' => 'required',
+            'name' => 'required',
+            'email' => 'required',
+        ], [
+            'uuid.required' => 'UUID tidak boleh kosong',
+            'name.required' => 'Nama harus diisi',
+            'email.required' => 'Email harus diisi',
+        ]);
+
+        User::where('uuid', $request->uuid)->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'password' => bcrypt($request->password),
+        ]);
+
+        return redirect()->back()->with('success', 'User berhasil diupdate');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'uuid' => 'required',
+        ]);
+
+        User::where('uuid', $request->uuid)->delete();
+
+        return redirect()->back()->with('success', 'User berhasil dihapus');
     }
 }

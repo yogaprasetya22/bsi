@@ -19,6 +19,11 @@ const Sidebar = ({ isSidebarOpen, user }) => {
             <div className="lg:w-full md:w-[40%] w-[75%] bg-white h-full ">
                 <div className="px-5 py-5 flex flex-col justify-between h-full  pb-20">
                     <ul className="flex flex-col gap-3 w-full">
+                        <div className="w-full flex justify-center items-center flex-col gap-4 pb-5">
+                            <h1 className="font-extrabold text-teal-600 text-4xl">
+                                BSI
+                            </h1>
+                        </div>
                         {MenuDashboard &&
                             MenuDashboard.map((menu, index) => (
                                 <div key={index}>

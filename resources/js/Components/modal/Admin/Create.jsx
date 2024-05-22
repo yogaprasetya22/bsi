@@ -3,29 +3,21 @@ import InputLabel from "@/Components/ui/InputLabel";
 import TextInput from "@/Components/ui/TextInput";
 import React from "react";
 import { useForm } from "@inertiajs/react";
-import { useEffect } from "react";
 
-export default function Update({ data: data_user }) {
-    const { data, setData, put, processing, errors, reset } = useForm({
-        uuid: data_user.uuid,
+export default function Create() {
+    const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
         password: "",
     });
-    useEffect(() => {
-        setData({
-            uuid: data_user.uuid,
-            name: data_user.name,
-            email: data_user.email,
-        });
-    }, [data_user]);
 
-    const handleUpdateUser = (e) => {
+    const handleAddAdmin = (e) => {
         e.preventDefault();
-        put(route("superadmin.user.update"), {
+
+        post(route("superadmin.admin.store"), {
             preserveScroll: true,
             onSuccess: () => {
-                window.my_modal_2.close();
+                window.my_modal_1.close();
                 reset();
             },
         });
@@ -33,13 +25,13 @@ export default function Update({ data: data_user }) {
 
     return (
         <dialog
-            id="my_modal_2"
-            className="modal backdrop-blur-sm backdrop-brightness-75"
+            id="my_modal_1"
+            className="modal backdrop-blur-sm backdrop-brightness-75 "
         >
             <div className="modal-box w-full max-w-2xl overflow bg-white">
                 <div className=" absolute top-0 right-0">
                     <button
-                        onClick={() => window.my_modal_2.close()}
+                        onClick={() => window.my_modal_1.close()}
                         className="btn-close text-2xl btn bg-transparent border-none"
                         aria-label="close modal"
                     >
@@ -49,24 +41,21 @@ export default function Update({ data: data_user }) {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-500">
-                            Update User
+                            Create Admin
                         </h1>
                     </div>
                     <form
                         className="flex flex-col gap-5"
-                        onSubmit={handleUpdateUser}
+                        onSubmit={handleAddAdmin}
                     >
                         <div className="flex flex-col gap-2">
                             <div className="flex flex-row gap-5 w-full">
                                 <div className="flex flex-col gap-2 w-full">
-                                    <InputLabel
-                                        htmlFor="update_name"
-                                        value="Name"
-                                    />
+                                    <InputLabel htmlFor="name" value="Name" />
                                     <TextInput
-                                        id="update_name"
+                                        id="name"
                                         type="text"
-                                        name="update_name"
+                                        name="name"
                                         value={data.name}
                                         className="mt-1 block w-full"
                                         autoComplete="name"
@@ -81,14 +70,11 @@ export default function Update({ data: data_user }) {
                                     />
                                 </div>
                                 <div className="flex flex-col gap-2 w-full">
-                                    <InputLabel
-                                        htmlFor="update_email"
-                                        value="Email"
-                                    />
+                                    <InputLabel htmlFor="email" value="Email" />
                                     <TextInput
-                                        id="update_email"
+                                        id="email"
                                         type="email"
-                                        name="update_email"
+                                        name="email"
                                         value={data.email}
                                         className="mt-1 block w-full"
                                         autoComplete="email"
@@ -104,13 +90,13 @@ export default function Update({ data: data_user }) {
                             </div>
                             <div className="flex flex-col gap-2 w-full">
                                 <InputLabel
-                                    htmlFor="update_password"
+                                    htmlFor="password"
                                     value="Password"
                                 />
                                 <TextInput
-                                    id="update_password"
+                                    id="password"
                                     type="password"
-                                    name="update_password"
+                                    name="password"
                                     value={data.password}
                                     className="mt-1 block w-full"
                                     autoComplete="password"
@@ -129,7 +115,7 @@ export default function Update({ data: data_user }) {
                                 type="submit"
                                 className="btn bg-indigo-600/90 text-white"
                             >
-                                {processing ? "Loading..." : "Update"}
+                                {processing ? "Loading..." : "Create"}
                             </button>
                         </div>
                     </form>

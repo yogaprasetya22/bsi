@@ -1,10 +1,11 @@
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import Dropdown from "@/Components/ui/Dropdown";
 // import NavLink from "@/Components/ui/NavLink";
 import React, { useState, useEffect, useRef } from "react";
 import { validateHeader, validateRole } from "./Example";
 
 const Header = ({ toggleSidebar, isSidebarOpen, user }) => {
+    const {title} = usePage().props;
     const [isDropdownOpen, setDropdownOpen] = useState(false);
     const dropdownRef = useRef(null);
     const toggleDropdown = () => {
@@ -33,8 +34,12 @@ const Header = ({ toggleSidebar, isSidebarOpen, user }) => {
     }, []);
 
     return (
-        <header className="bg-white px-5 md:px-16 shadow-md h-auto w-full flex flex-row justify-between items-center sticky top-0 z-50 ">
-            <div className="w-auto flex h-16 md:h-20 gap-2">
+        <header className="border-b border-gray-600 shadow-header bg-white px-5 md:px-16 h-auto w-full flex flex-row justify-between items-center sticky top-0 z-50 ">
+            {/* title */}
+            <h1 className="text-lg font-extrabold text-gray-500 p-2">
+                {title}
+            </h1>
+            {/* <div className="w-auto flex h-16 md:h-20 gap-2">
                 <button
                     onClick={toggleSidebar}
                     className="text-3xl lg:hidden block"
@@ -51,9 +56,9 @@ const Header = ({ toggleSidebar, isSidebarOpen, user }) => {
                 >
                     <span className="text-teal-600 font-extrabold">BSI</span>
                 </Link>
-            </div>
+            </div> */}
 
-            <div className="hidden sm:flex sm:items-center sm:ml-6 ">
+            {/* <div className="hidden sm:flex sm:items-center sm:ml-6 ">
                 <div className="ml-3 relative">
                     <Dropdown>
                         <Dropdown.Trigger>
@@ -105,7 +110,7 @@ const Header = ({ toggleSidebar, isSidebarOpen, user }) => {
                         </Dropdown.Content>
                     </Dropdown>
                 </div>
-            </div>
+            </div> */}
         </header>
     );
 };

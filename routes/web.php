@@ -1,16 +1,8 @@
 <?php
 
 use App\Http\Controllers\User\AdminController;
-use App\Http\Controllers\User\BkalController;
-use App\Http\Controllers\User\WarekController;
-use App\Http\Controllers\User\KaprodiController;
-use App\Http\Controllers\User\DosenPaController;
-use App\Http\Controllers\User\MahasiswaController;
-use App\Http\Controllers\ExcelController;
 use App\Http\Controllers\PengajuanController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\TableUserController;
-use App\Http\Controllers\User\Client;
 use App\Http\Controllers\User\ClientContoller;
 use App\Http\Controllers\User\SuperAdminController;
 use Illuminate\Support\Facades\Route;
@@ -38,6 +30,18 @@ Route::get('/fail404', function () {
 
 Route::prefix('superadmin')->middleware(['auth', 'role:3', 'verified'])->group(function () {
     Route::get('/', [SuperAdminController::class, 'index'])->name('superadmin');
+
+    // kelola user client
+    Route::get('/user', [SuperAdminController::class, 'user'])->name('superadmin.user');
+    Route::post('/user/create', [ClientContoller::class, 'store'])->name('superadmin.user.store');
+    Route::put('/user/update', [ClientContoller::class, 'update'])->name('superadmin.user.update');
+    Route::delete('/user', [ClientContoller::class, 'destroy'])->name('superadmin.user.destroy');
+
+    // kelola user admin
+    Route::get('/admin', [SuperAdminController::class, 'admin'])->name('superadmin.admin');
+    Route::post('/admin/create', [AdminController::class, 'store'])->name('superadmin.admin.store');
+    Route::put('/admin/update', [AdminController::class, 'update'])->name('superadmin.admin.update');
+    Route::delete('/admin', [AdminController::class, 'destroy'])->name('superadmin.admin.destroy');
 });
 
 
@@ -53,6 +57,10 @@ Route::prefix('admin')->middleware(['auth', 'role:1', 'verified'])->group(functi
     Route::get('/regist', [AdminController::class, 'RegistPengajuan'])->name('admin.RegistPengajuan');
     Route::post('/pengajuan/status', [PengajuanController::class, 'pengajuan_status'])->name('admin.pengajuan_status');
 
+    Route::get('/document', [AdminController::class, 'Document'])->name('admin.document');
+    Route::post('/document', [AdminController::class, 'DocumentStore'])->name('admin.document.store');
+    Route::post('/document/edit', [AdminController::class, 'DocumentEdit'])->name('admin.document.edit');
+    Route::delete('/document', [AdminController::class, 'DocumentDelete'])->name('admin.document.destroy');
 });
 
 

@@ -1,3 +1,31 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer utilities {
+    .line-clamp-3 {
+        overflow          : hidden;
+        display           : -webkit-box;
+        -webkit-box-orient: vertical;
+        -webkit-line-clamp: 3;
+        line-clamp        : 3;
+    }
+
+    .shadow-sh-box {
+        box-shadow        : 10px 10px 0px -3px rgba(0, 0, 0, 0.61);
+        -webkit-box-shadow: 10px 10px 0px -3px rgba(0, 0, 0, 0.61);
+        -moz-box-shadow   : 10px 10px 0px -3px rgba(0, 0, 0, 0.61);
+    }
+
+    .shadow-sh-box-sm {
+        box-shadow        : 6px 6px 0px -3px rgba(0, 0, 0, 0.61);
+        -webkit-box-shadow: 6px 6px 0px -3px rgba(0, 0, 0, 0.61);
+        -moz-box-shadow   : 6px 6px 0px -3px rgba(0, 0, 0, 0.61);
+    }
+
+    .shadow-header {
+        box-shadow        : 2px 49px 174px -44px rgba(84, 186, 121, 0.78);
+        -webkit-box-shadow: 2px 49px 174px -44px rgba(84, 186, 121, 0.78);
+        -moz-box-shadow   : 2px 49px 174px -44px rgba(84, 186, 121, 0.78);
+    }
+}

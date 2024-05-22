@@ -21,7 +21,7 @@ export default function Delete({ uuid }) {
     const handleDelete = (e) => {
         e.preventDefault();
 
-        destroy(route("superadmin.user.destroy"), {
+        destroy(route("superadmin.admin.destroy"), {
             preserveScroll: true,
             onSuccess: () => {
                 window.my_modal_3.close();
@@ -50,7 +50,7 @@ export default function Delete({ uuid }) {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-600">
-                            Delete User
+                            Delete Admin
                         </h1>
                     </div>
                     <form

@@ -8,15 +8,13 @@ export default function Create() {
     const { data, setData, post, processing, errors, reset } = useForm({
         name: "",
         email: "",
-        no_telp: "",
-        alamat: "",
         password: "",
     });
 
     const handleAddAdmin = (e) => {
         e.preventDefault();
 
-        post(route("superadmin.admin.store"), {
+        post(route("superadmin.user.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 window.my_modal_1.close();
@@ -28,9 +26,9 @@ export default function Create() {
     return (
         <dialog
             id="my_modal_1"
-            className="modal backdrop-blur-sm backdrop-brightness-75"
+            className="modal backdrop-blur-sm backdrop-brightness-75 "
         >
-            <div className="modal-box w-full max-w-2xl overflow">
+            <div className="modal-box w-full max-w-2xl overflow bg-white">
                 <div className=" absolute top-0 right-0">
                     <button
                         onClick={() => window.my_modal_1.close()}
@@ -43,7 +41,7 @@ export default function Create() {
                 <div className=" w-full flex flex-col gap-5">
                     <div className="w-full flex flex-row justify-center items-center">
                         <h1 className="text-2xl font-bold text-gray-500">
-                            Create Admin
+                            Create User
                         </h1>
                     </div>
                     <form
@@ -86,50 +84,6 @@ export default function Create() {
                                     />
                                     <InputError
                                         message={errors.email}
-                                        className="mt-2"
-                                    />
-                                </div>
-                            </div>
-                            <div className="flex flex-row gap-5 w-full">
-                                <div className="flex flex-col gap-2 w-full">
-                                    <InputLabel
-                                        htmlFor="no_telp"
-                                        value="No Telp"
-                                    />
-                                    <TextInput
-                                        id="no_telp"
-                                        type="text"
-                                        name="no_telp"
-                                        value={data.no_telp}
-                                        className="mt-1 block w-full"
-                                        autoComplete="no_telp"
-                                        onChange={(e) =>
-                                            setData("no_telp", e.target.value)
-                                        }
-                                    />
-                                    <InputError
-                                        message={errors.no_telp}
-                                        className="mt-2"
-                                    />
-                                </div>
-                                <div className="flex flex-col gap-2 w-full">
-                                    <InputLabel
-                                        htmlFor="alamat"
-                                        value="Alamat"
-                                    />
-                                    <TextInput
-                                        id="alamat"
-                                        type="text"
-                                        name="alamat"
-                                        value={data.alamat}
-                                        className="mt-1 block w-full"
-                                        autoComplete="alamat"
-                                        onChange={(e) =>
-                                            setData("alamat", e.target.value)
-                                        }
-                                    />
-                                    <InputError
-                                        message={errors.alamat}
                                         className="mt-2"
                                     />
                                 </div>

@@ -1,19 +1,20 @@
 import Layout from "@/Layouts/Layout";
-import React, { useEffect, useState } from "react";
+import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import moment from "moment/moment";
 import "moment/locale/id";
-import FeedbackModal from "@/Components/modal/FeedbackModal";
+import Create from "@/Components/modal/Admin/Create";
+import Update from "@/Components/modal/Admin/Update";
+import Delete from "@/Components/modal/Admin/Delete";
 moment.locale("id");
 
-export default function Feedback({ title, auth, data }) {
+export default function Admin({ title, auth, data }) {
     const [itemOffset, setItemOffset] = useState(0);
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
     const [Loading, setLoading] = useState(false);
     const [page, setPage] = useState(5);
     const [dataModal, setDataModal] = useState([]);
-
 
     useEffect(() => {
         setLoading(true);
@@ -41,26 +42,33 @@ export default function Feedback({ title, auth, data }) {
 
     return (
         <Layout title={title} user={auth?.user}>
-            {dataModal && <FeedbackModal data={dataModal} />}
-            <div className="flex flex-col gap-5 rounded-xl">
+            <Create />
+            <Update data={dataModal} />
+            <Delete uuid={dataModal.uuid} />
+            <div className="flex justify-between items-center px-5 py-1">
+                <h1 className="text-2xl font-semibold">User</h1>
+                <button
+                    onClick={() => {
+                        window.my_modal_1.show();
+                    }}
+                    className="bg-teal-600 btn rounded-md"
+                >
+                    <i className="text-white fas fa-plus"></i>
+                </button>
+            </div>
+            <div className="flex flex-col gap-5 rounded-xl ">
                 <div className="overflow-x-auto bg-white p-2 rounded-md">
                     <table className="table shadow-sh-box border-2">
                         <thead className="bg-teal-600">
                             <tr className="font-bold  text-lg text-white">
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
-                                    No Surat
+                                    Id
                                 </th>
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
-                                    Keterangan
+                                    Nama
                                 </th>
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
-                                    Tanggal Surat
-                                </th>
-                                <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
-                                    Tanggal Terima
-                                </th>
-                                <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
-                                    File
+                                    Email
                                 </th>
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
                                     Action
@@ -68,46 +76,36 @@ export default function Feedback({ title, auth, data }) {
                             </tr>
                         </thead>
                         {currentItems?.map((item, index) => (
-                            <tbody key={index} className="">
+                            <tbody key={index}>
                                 <tr>
-                                    <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        {item.pengajuan?.no_surat}
+                                    <td className="border-x text-md font-medium text-gray-500 tracking-wider text-center max-w-[4rem] truncate">
+                                        {item.uuid}
                                     </td>
-                                    <td className="border-x text-xs font-medium text-gray-500  tracking-wider text-center">
-                                        {item.pengajuan.keterangan}
+                                    <td className="border-x text-md font-medium text-gray-500 tracking-wider text-center">
+                                        {item.name}
                                     </td>
-                                    <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        {moment(
-                                            item.pengajuan.tanggal_surat
-                                        ).format("DD MMMM YYYY")}
+                                    <td className="border-x text-md font-medium text-gray-500 tracking-wider text-center">
+                                        {item.email}
                                     </td>
                                     <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        {moment(
-                                            item.pengajuan.tanggal_terima
-                                        ).format("DD MMMM YYYY")}
-                                    </td>
-                                    <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        <button
-                                            className=""
-                                            onClick={() =>
-                                                window.open(
-                                                    `${window.location.origin}/uploads/feedback/${item.pengajuan.no_surat}/${item.file}`,
-                                                    "_blank"
-                                                )
-                                            }
-                                        >
-                                            <i className="bi bi-file-earmark-text"></i>
-                                        </button>
-                                    </td>
-                                    <td className="border-x text-xs font-medium text-gray-500 flex justify-center ">
+                                        {/* edit and delete */}
                                         <button
                                             onClick={() => {
-                                                window.my_modal_1.show();
                                                 setDataModal(item);
+                                                window.my_modal_2.show();
                                             }}
-                                            className="btn "
+                                            className="bg-yellow-500 btn rounded-md"
                                         >
-                                            <i className="bi bi-eye"></i>
+                                            <i className="text-white fas fa-edit"></i>
+                                        </button>
+                                        <button
+                                            className="bg-red-600 btn rounded-md"
+                                            onClick={() => {
+                                                setDataModal(item);
+                                                window.my_modal_3.show();
+                                            }}
+                                        >
+                                            <i className="text-white fas fa-trash"></i>
                                         </button>
                                     </td>
                                 </tr>
