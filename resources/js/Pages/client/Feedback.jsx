@@ -14,7 +14,6 @@ export default function Feedback({ title, auth, data }) {
     const [page, setPage] = useState(5);
     const [dataModal, setDataModal] = useState([]);
 
-
     useEffect(() => {
         setLoading(true);
         const endOffset = parseInt(itemOffset) + parseInt(page);
@@ -39,9 +38,55 @@ export default function Feedback({ title, auth, data }) {
         setItemOffset(newOffset);
     };
 
+    const [search, setSearch] = useState("");
+
+    const handleSearch = () => {
+        if (search === "") {
+            setCurrentItems(data);
+        } else {
+            const filteredData = data.filter(
+                (item) =>
+                    item.pengajuan.no_surat
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    item.pengajuan.keterangan
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    moment(item.pengajuan.tanggal_surat)
+                        .format("DD MMMM YYYY")
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    moment(item.pengajuan.tanggal_terima)
+                        .format("DD MMMM YYYY")
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+            );
+            setCurrentItems(filteredData);
+        }
+    };
+
     return (
         <Layout title={title} user={auth?.user}>
             {dataModal && <FeedbackModal data={dataModal} />}
+            <div className="w-full flex flex-row gap-5">
+                <div className="w-1/2">
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Cari histori"
+                        className="w-full border-2 border-gray-300 rounded-md p-2"
+                    />
+                </div>
+                <div className="w-1/2">
+                    <button
+                        className="btn bg-teal-500 text-white rounded-md"
+                        onClick={handleSearch}
+                    >
+                        Cari
+                    </button>
+                </div>
+            </div>
             <div className="flex flex-col gap-5 rounded-xl">
                 <div className="overflow-x-auto bg-white p-2 rounded-md">
                     <table className="table shadow-sh-box border-2">
@@ -91,7 +136,7 @@ export default function Feedback({ title, auth, data }) {
                                             className=""
                                             onClick={() =>
                                                 window.open(
-                                                    `${window.location.origin}/uploads/feedback/${item.pengajuan.no_surat}/${item.file}`,
+                                                    `${window.location.origin}/uploads/feedback/${item.file}`,
                                                     "_blank"
                                                 )
                                             }

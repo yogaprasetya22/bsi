@@ -95,7 +95,7 @@ export default function RegistPengajuan({ title, auth, data }) {
                                             className="hover:text-teal-500 p-2 hover:border-b-2 border-teal-500"
                                             onClick={() =>
                                                 window.open(
-                                                    `${window.location.origin}/uploads/pengajuan/${item.no_surat}/${item.file}`,
+                                                    `${window.location.origin}/uploads/pengajuan/${item.file}`,
                                                     "_blank"
                                                 )
                                             }

@@ -80,7 +80,7 @@ export default function FeedbackModal({ data: data_feedback }) {
                                                 className="hover:text-teal-500 p-2 hover:border-b-2 border-teal-500"
                                                 onClick={() =>
                                                     window.open(
-                                                        `${window.location.origin}/uploads/feedback/${data_feedback?.pengajuan.no_surat}/${data_feedback?.file}`,
+                                                        `${window.location.origin}/uploads/feedback/${data_feedback?.file}`,
                                                         "_blank"
                                                     )
                                                 }
@@ -148,7 +148,7 @@ export default function FeedbackModal({ data: data_feedback }) {
                                                 className="hover:text-teal-500 p-2 hover:border-b-2 border-teal-500"
                                                 onClick={() =>
                                                     window.open(
-                                                        `${window.location.origin}/uploads/feedback/${data_feedback?.pengajuan.no_surat}/${data_feedback?.file}`,
+                                                        `${window.location.origin}/uploads/feedback/${data_feedback?.file}`,
                                                         "_blank"
                                                     )
                                                 }

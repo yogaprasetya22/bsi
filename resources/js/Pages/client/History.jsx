@@ -4,6 +4,7 @@ import React, { useState, useEffect } from "react";
 import ReactPaginate from "react-paginate";
 import moment from "moment/moment";
 import "moment/locale/id";
+import Delete from "@/Components/modal/histori/Delete";
 moment.locale("id");
 
 export default function History({ title, auth, data }) {
@@ -39,9 +40,51 @@ export default function History({ title, auth, data }) {
         setItemOffset(newOffset);
     };
 
+    const [search, setSearch] = useState("");
+
+    const handleSearch = () => {
+        if (search === "") {
+            setCurrentItems(data);
+        } else {
+            const filteredData = data.filter(
+                (item) =>
+                    item.no_surat
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    item.keterangan
+                        .toLowerCase()
+                        .includes(search.toLowerCase()) ||
+                    item.tanggal_surat
+                        .toLowerCase()
+                        .includes(search.toLowerCase())
+            );
+            setCurrentItems(filteredData);
+        }
+    };
+
     return (
         <Layout title={title} user={auth?.user}>
             <Update data={dataModal} />
+            <Delete uuid={dataModal.uuid} /> {/* search */}
+            <div className="w-full flex flex-row gap-5">
+                <div className="w-1/2">
+                    <input
+                        type="text"
+                        value={search}
+                        onChange={(e) => setSearch(e.target.value)}
+                        placeholder="Cari histori"
+                        className="w-full border-2 border-gray-300 rounded-md p-2"
+                    />
+                </div>
+                <div className="w-1/2">
+                    <button
+                        className="btn bg-teal-500 text-white rounded-md"
+                        onClick={handleSearch}
+                    >
+                        Cari
+                    </button>
+                </div>
+            </div>
             <div className="flex flex-col gap-5 rounded-xl ">
                 <div className="overflow-x-auto bg-white p-2 rounded-md">
                     <table className="table shadow-sh-box border-2">
@@ -91,7 +134,7 @@ export default function History({ title, auth, data }) {
                                             className=""
                                             onClick={() =>
                                                 window.open(
-                                                    `${window.location.origin}/uploads/pengajuan/${item.no_surat}/${item.file}`,
+                                                    `${window.location.origin}/uploads/pengajuan/${item.file}`,
                                                     "_blank"
                                                 )
                                             }
@@ -110,7 +153,13 @@ export default function History({ title, auth, data }) {
                                         >
                                             <i className="text-white fas fa-edit"></i>
                                         </button>
-                                        <button className="bg-red-600 btn rounded-md">
+                                        <button
+                                            className="bg-red-600 btn rounded-md"
+                                            onClick={() => {
+                                                setDataModal(item);
+                                                window.my_modal_3.show();
+                                            }}
+                                        >
                                             <i className="text-white fas fa-trash"></i>
                                         </button>
                                     </td>

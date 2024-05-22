@@ -59,38 +59,42 @@ class DhasboardController extends Controller
             }
         }
 
-        foreach ($data as $key => $value) {
-            $pengajuan = Pengajuan::create([
-                'uuid' => str()->uuid(),
-                'user_id' => $value['user']['id'],
-                'status_id' => (random_int(1, 100) <= 30) ? rand(1, 5) : 4,
-                'no_surat' => $value['no_surat'],
-                'keterangan' => $value['keterangan'],
-                'tanggal_surat' => $value['status']['tanggal_surat'],
-                'tanggal_terima' => $value['status']['tanggal_terima'],
-                'file' => $value['file'],
-                'created_at' => $value['created_at'],
-            ]);
+        $name_file = Pengajuan::first();
 
-            if ($value['feedback']) {
-                $pengajuan->feedback()->create([
-                    'feedback' => $value['feedback']['feedback'],
-                    'pic' => $value['feedback']['pic'],
-                    'file' => $value['feedback']['file'],
-                    'tanggal_feedback' => $value['feedback']['tanggal_feedback'],
+        if ($name_file) {
+            foreach ($data as $key => $value) {
+                $pengajuan = Pengajuan::create([
+                    'uuid' => str()->uuid(),
+                    'user_id' => $value['user']['id'],
+                    'status_id' => (random_int(1, 100) <= 30) ? rand(1, 5) : 4,
+                    'no_surat' => $value['no_surat'],
+                    'keterangan' => $value['keterangan'],
+                    'tanggal_surat' => $value['status']['tanggal_surat'],
+                    'tanggal_terima' => $value['status']['tanggal_terima'],
+                    'file' => $name_file->file,
+                    'created_at' => $value['created_at'],
                 ]);
+
+                if ($value['feedback']) {
+                    $pengajuan->feedback()->create([
+                        'feedback' => $value['feedback']['feedback'],
+                        'pic' => $value['feedback']['pic'],
+                        'file' =>  $name_file->file,
+                        'tanggal_feedback' => $value['feedback']['tanggal_feedback'],
+                    ]);
+                }
             }
+
+
+            return response()->json([
+                'count' => count($data),
+                'data' => $data,
+            ]);
+        } else {
+            return response()->json([
+                'message' => 'buat data pengajuan terlebih dahulu 1 / lebih',
+            ]);
         }
-
-        // filter data berdasarkan user_id 
-        // $data = collect($data)->filter(function ($item) {
-        //     return $item['user']['id'] == 2;
-        // });
-
-        return response()->json([
-            'count' => count($data),
-            'data' => $data,
-        ]);
     }
 
     /**

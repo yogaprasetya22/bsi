@@ -50,6 +50,10 @@ Route::prefix('/')->middleware(['auth', 'role:2', 'verified'])->group(function (
     Route::get('/pengajuan', [ClientContoller::class, 'pengajuan'])->name('client-pengajuan');
     Route::get('/history', [ClientContoller::class, 'histroy'])->name('client-history');
     Route::get('/feedback', [ClientContoller::class, 'feedback'])->name('client-feedback');
+
+    Route::post('/pengajuan/create', [PengajuanController::class, 'store'])->name('client.pengajuan.store');
+    Route::post('/pengajuan/update', [PengajuanController::class, 'update'])->name('client.pengajuan.update');
+    Route::delete('/pengajuan/delete', [PengajuanController::class, 'destroy'])->name('client.pengajuan.destroy');
 });
 
 Route::prefix('admin')->middleware(['auth', 'role:1', 'verified'])->group(function () {

@@ -21,7 +21,7 @@ export default function Form() {
         formData.append("tanggal_surat", data.tanggal_surat);
         formData.append("tanggal_terima", data.tanggal_terima);
         formData.append("file", data.file);
-        post(route("pengajuan.store"), {
+        post(route("client.pengajuan.store"), {
             preserveScroll: true,
             onSuccess: () => {
                 reset();

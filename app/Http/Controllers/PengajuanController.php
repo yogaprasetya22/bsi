@@ -35,16 +35,24 @@ class PengajuanController extends Controller
             'keterangan' => 'required',
             'tanggal_surat' => 'required',
             'tanggal_terima' => 'required',
-            'file' => 'required|mimes:pdf,doc,docx|max:2048', // Sesuaikan jenis dan ukuran file yang diizinkan
+            'file' => 'required|mimes:pdf,doc,docx|max:10048', // Sesuaikan jenis dan ukuran file yang diizinkan
+        ], [
+            'no_surat.required' => 'No Surat harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi',
+            'tanggal_surat.required' => 'Tanggal Surat harus diisi',
+            'tanggal_terima.required' => 'Tanggal Terima harus diisi',
+            'file.required' => 'File harus diisi',
+            'file.mimes' => 'File harus berupa pdf, doc, docx',
+            'file.max' => 'Ukuran file maksimal 10MB',
         ]);
+
 
         //    storage
         $file = $request->file('file');
         $renameFile = time() . '-' . $file->getClientOriginalName()
             . '.' . $file->getClientOriginalExtension();
-        $noSurat = $request->no_surat;
         $file->move(public_path(
-            'uploads/pengajuan/' . $noSurat . '/'
+            'uploads/pengajuan/'
         ), $renameFile);
 
 
@@ -97,9 +105,8 @@ class PengajuanController extends Controller
             if (!$feedback) {
                 $file = $request->file('file');
                 $renameFile = time() . '-' . $file->getClientOriginalName();
-                $noSurat = $pengajuan->no_surat;
                 $file->move(public_path(
-                    'uploads/feedback/' . $noSurat . '/'
+                    'uploads/feedback/'
                 ), $renameFile);
 
                 FeedbackPengajuan::create([
@@ -110,7 +117,7 @@ class PengajuanController extends Controller
                 ]);
             } else {
                 // hapus file sebelumnya jika ada file baru yang diupload
-                $path = public_path('uploads/feedback/' . $pengajuan->no_surat . '/');
+                $path = public_path('uploads/feedback/');
                 if (file_exists($path)) {
                     $files = glob($path . '*');
                     foreach ($files as $file) {
@@ -122,9 +129,8 @@ class PengajuanController extends Controller
 
                 $file = $request->file('file');
                 $renameFile = time() . '-' . $file->getClientOriginalName();
-                $noSurat = $pengajuan->no_surat;
                 $file->move(public_path(
-                    'uploads/feedback/' . $noSurat . '/'
+                    'uploads/feedback/'
                 ), $renameFile);
 
                 $feedback->file = $renameFile;
@@ -169,16 +175,72 @@ class PengajuanController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, string $id)
+    public function update(Request $request)
     {
-        //
+        // buatkan update user validation
+        $request->validate([
+            'uuid' => 'required',
+            'no_surat' => 'required',
+            'keterangan' => 'required',
+            'tanggal_surat' => 'required',
+            'tanggal_terima' => 'required',
+        ], [
+            'no_surat.required' => 'No Surat harus diisi',
+            'keterangan.required' => 'Keterangan harus diisi',
+            'tanggal_surat.required' => 'Tanggal Surat harus diisi',
+            'tanggal_terima.required' => 'Tanggal Terima harus diisi',
+        ]);
+
+        $pengajuan = Pengajuan::where('uuid', $request->uuid)->first();
+
+        if ($request->hasFile('file')) {
+            $file = $request->file('file');
+            $renameFile = time() . '-' . $file->getClientOriginalName()
+                . '.' . $file->getClientOriginalExtension();
+            $file->move(public_path(
+                'uploads/pengajuan/'
+            ), $renameFile);
+
+            // remove old file
+            if (is_file(public_path('uploads/pengajuan/' . $pengajuan->file))) {
+                unlink(public_path('uploads/pengajuan/' . $pengajuan->file));
+            }
+
+            $pengajuan->update([
+                'no_surat' => $request->no_surat,
+                'keterangan' => $request->keterangan,
+                'tanggal_surat' => $request->tanggal_surat,
+                'tanggal_terima' => $request->tanggal_terima,
+                'file' => $renameFile,
+            ]);
+        } else {
+            $pengajuan->update([
+                'no_surat' => $request->no_surat,
+                'keterangan' => $request->keterangan,
+                'tanggal_surat' => $request->tanggal_surat,
+                'tanggal_terima' => $request->tanggal_terima,
+            ]);
+        }
+
+        return redirect()->back()->with('success', 'Pengajuan berhasil di update');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(Request $request)
     {
-        //
+        $request->validate([
+            'uuid' => 'required',
+        ]);
+
+        $pengajuan = Pengajuan::where('uuid', $request->uuid)->first();
+        if (is_file(public_path('uploads/pengajuan/' . $pengajuan->file))) {
+            unlink(public_path('uploads/pengajuan/' . $pengajuan->file));
+        }
+
+        $pengajuan->delete();
+
+        return redirect()->back()->with('success', 'Pengajuan berhasil dihapus');
     }
 }

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 
-export default function Delete({ id }) {
+export default function Delete({ uuid }) {
     const {
         data,
         setData,
@@ -10,22 +10,21 @@ export default function Delete({ id }) {
         errors,
         reset,
     } = useForm({
-        id: "",
+        uuid: "",
     });
     useEffect(() => {
         setData({
-            id: id,
+            uuid: uuid,
         });
-    }, [id]);
+    }, [uuid]);
 
     const handleDelete = (e) => {
         e.preventDefault();
 
-        destroy(route("admin.barang-masuk.destroy"), {
+        destroy(route("client.pengajuan.destroy"), {
             preserveScroll: true,
             onSuccess: () => {
                 window.my_modal_3.close();
-                window.location.reload();
             },
             onError: (errors) => {
                 console.log(errors);

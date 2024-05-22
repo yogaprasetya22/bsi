@@ -46,7 +46,7 @@ export default function Document({ title, auth, data: data_document }) {
                     </div>
                     <div className="w-1/2">
                         <button
-                            className="btn bg-blue-500 text-white rounded-md"
+                            className="btn bg-teal-500 text-white rounded-md"
                             onClick={handleSearch}
                         >
                             Cari

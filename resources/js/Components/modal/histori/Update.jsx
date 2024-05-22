@@ -6,30 +6,28 @@ import { useForm } from "@inertiajs/react";
 import { useEffect } from "react";
 
 export default function Update({ data: data_regist }) {
-   
-    const { data, setData, put, processing, errors, reset } = useForm({
-        id: "",
+    const { data, setData, post, processing, errors, reset } = useForm({
+        uuid: "",
         no_surat: "",
         keterangan: "",
         tanggal_surat: "",
         tanggal_terima: "",
-        file: "",
+        file: null,
     });
     useEffect(() => {
         setData({
-            id: data_regist.id,
+            uuid: data_regist.uuid,
             no_surat: data_regist.no_surat,
             keterangan: data_regist.keterangan,
             tanggal_surat: data_regist.tanggal_surat,
             tanggal_terima: data_regist.tanggal_terima,
-            file: null,
         });
     }, [data_regist]);
 
     const handleAddowner = (e) => {
         e.preventDefault();
 
-        put(route("admin.owner.update"), {
+        post(route("client.pengajuan.update"), {
             preserveScroll: true,
             onSuccess: () => {
                 window.my_modal_2.close();
@@ -245,7 +243,7 @@ export default function Update({ data: data_regist }) {
                                 />
                                 <label
                                     htmlFor="update_file"
-                                    className="w-full flex flex-col gap-2 items-center justify-center bg-gray-100 border border-gray-200 rounded-md cursor-pointer"
+                                    className="w-full max-w-[30rem] flex flex-col gap-2 items-center justify-center bg-gray-100 border border-gray-200 rounded-md cursor-pointer"
                                 >
                                     {renderImage()}
                                 </label>

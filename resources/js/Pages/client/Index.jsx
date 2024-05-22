@@ -220,7 +220,7 @@ export default function Index({ title, auth, data }) {
                         <h1 className="text-2xl text-gray-700 font-semibold absolute top-0 w-full text-center">
                             Analisis Pengajuan
                         </h1>
-                        <Charts data={data} />
+                        <Charts data={currentData} />
                     </div>
                     <div className="w-full h-full  rounded-md p-5 shadow-lg flex flex-col shadow-sh-box border-2">
                         {/* keterangan tentang aplikasi pengajuan berkas */}
