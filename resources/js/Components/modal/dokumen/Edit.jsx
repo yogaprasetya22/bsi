@@ -4,6 +4,9 @@ import TextInput from "@/Components/ui/TextInput";
 import React from "react";
 import { useForm } from "@inertiajs/react";
 import { useEffect } from "react";
+import moment from "moment/moment";
+import "moment/locale/id";
+moment.locale("id");
 
 export default function Add({ value }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -11,6 +14,8 @@ export default function Add({ value }) {
         title: "",
         keterangan: "",
         file: null, // file should be initialized as null
+        tanggal_surat: null,
+        no_surat: "",
     });
 
     useEffect(() => {
@@ -18,6 +23,8 @@ export default function Add({ value }) {
             id: value.id,
             title: value.title,
             keterangan: value.keterangan,
+            tanggal_surat: value.tanggal_surat,
+            no_surat: value.no_surat,
         });
     }, [value]);
 
@@ -35,6 +42,8 @@ export default function Add({ value }) {
         formData.append("id", data.id || value.id);
         formData.append("title", data.title || value.title);
         formData.append("keterangan", data.keterangan || value.keterangan);
+        formData.append("tanggal_surat", data.tanggal_surat || value.tanggal_surat);
+        formData.append("no_surat", data.no_surat || value.no_surat);
         if (data.file) {
             formData.append("file", data.file);
         }
@@ -46,6 +55,23 @@ export default function Add({ value }) {
                 window.my_modal_2.close();
             },
         });
+    };
+
+    const getTodayDate = () => {
+        const today = new Date();
+        const year = today.getFullYear();
+        let month = today.getMonth();
+        let day = today.getDate();
+
+        // Pad single digit month and day with leading zero if needed
+        if (month < 10) {
+            month = "0" + month;
+        }
+        if (day < 10) {
+            day = "0" + day;
+        }
+
+        return `${year}-${month}-${day}`;
     };
     return (
         <dialog
@@ -111,6 +137,51 @@ export default function Add({ value }) {
                                     />
                                 </div>
                             </div>
+                            <div className="flex flex-row gap-5">
+                                <div className="flex flex-col gap-2 w-full">
+                                    <InputLabel
+                                        htmlFor="tanggal_surat"
+                                        value="tanggal surat"
+                                    />
+                                    <TextInput
+                                        id="tanggal_surat"
+                                        type="date"
+                                        name="tanggal_surat"
+                                        value={
+                                            moment(data.tanggal_surat).format(
+                                                "YYYY-MM-DD"
+                                            ) || getTodayDate()
+                                        }
+                                        onChange={handleChange}
+                                        className="mt-1 block w-full"
+                                        autoComplete="tanggal_surat"
+                                        isFocused={true}
+                                    />
+                                    <InputError
+                                        message={errors.tanggal_surat}
+                                        className="mt-2"
+                                    />
+                                </div>
+                                <div className="flex flex-col gap-2 w-full">
+                                    <InputLabel
+                                        htmlFor="no_surat"
+                                        value="no surat"
+                                    />
+                                    <TextInput
+                                        id="no_surat"
+                                        type="text"
+                                        name="no_surat"
+                                        value={data.no_surat}
+                                        className="mt-1 block w-full"
+                                        autoComplete="no_surat"
+                                        onChange={handleChange}
+                                    />
+                                    <InputError
+                                        message={errors.no_surat}
+                                        className="mt-2"
+                                    />
+                                </div>
+                            </div>
                             <div className="flex flex-col gap-2 w-full">
                                 <InputLabel htmlFor="file" value="file" />
                                 <TextInput
@@ -118,6 +189,7 @@ export default function Add({ value }) {
                                     type="file"
                                     name="file"
                                     className="file-input file-input-ghost w-full"
+                                    autoComplete="file"
                                     onChange={handleFileChange}
                                 />
                                 <InputError

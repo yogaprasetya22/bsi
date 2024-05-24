@@ -7,6 +7,7 @@ import "moment/locale/id";
 moment.locale("id");
 
 export default function RegistPengajuan({ title, auth, data }) {
+    const [tahun, setTahun] = useState(moment().format("YYYY"));
     const [itemOffset, setItemOffset] = useState(0);
     const [currentItems, setCurrentItems] = useState([]);
     const [pageCount, setPageCount] = useState(0);
@@ -16,16 +17,20 @@ export default function RegistPengajuan({ title, auth, data }) {
 
     useEffect(() => {
         setLoading(true);
+        const filterDataTahun = data.filter((item) =>
+            moment(item.tanggal_surat).format("YYYY") === tahun
+        );
+
         const endOffset = parseInt(itemOffset) + parseInt(page);
-        const sortData = data
+        const sortData = filterDataTahun
             .sort((a, b) => {
                 return a.id - b.id;
             })
             .slice(itemOffset, endOffset);
         setCurrentItems(sortData);
-        setPageCount(Math.ceil(data.length / page));
+        setPageCount(Math.ceil(filterDataTahun.length / page));
         setLoading(false);
-    }, [itemOffset, data, page]);
+    }, [itemOffset, data, page,tahun]);
 
     const handlePageClick = (event) => {
         window.scrollTo({
@@ -45,6 +50,39 @@ export default function RegistPengajuan({ title, auth, data }) {
                 {/* head */}
                 <div className="flex justify-between items-center px-5 py-1">
                     <h1 className="text-2xl font-semibold">Regist Pengajuan</h1>
+                    {/* select sort tahun */}
+                    <div className="w-1/2">
+                        <select
+                            value={tahun}
+                            onChange={(e) => setTahun(e.target.value)}
+                            className="w-full border-2 border-gray-300 rounded-md p-2"
+                        >
+                            <option value={moment().format("YYYY")}>
+                                {moment().format("YYYY")}
+                            </option>
+                            <option
+                                value={moment()
+                                    .subtract(1, "years")
+                                    .format("YYYY")}
+                            >
+                                {moment().subtract(1, "years").format("YYYY")}
+                            </option>
+                            <option
+                                value={moment()
+                                    .subtract(2, "years")
+                                    .format("YYYY")}
+                            >
+                                {moment().subtract(2, "years").format("YYYY")}
+                            </option>
+                            <option
+                                value={moment()
+                                    .subtract(3, "years")
+                                    .format("YYYY")}
+                            >
+                                {moment().subtract(3, "years").format("YYYY")}
+                            </option>
+                        </select>
+                    </div>
                 </div>
                 <div className="overflow-x-auto bg-white p-2 rounded-md ">
                     <table className="table border shadow-sh-box-sm rounded-lg">

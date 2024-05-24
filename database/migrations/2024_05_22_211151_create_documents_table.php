@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id();
             $table->string('title');
             $table->string('keterangan');
+            $table->string('no_surat');
+            $table->date('tanggal_surat');
             $table->text('file');
             $table->timestamps();
         });

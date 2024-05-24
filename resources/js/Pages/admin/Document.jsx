@@ -10,14 +10,48 @@ moment.locale("id");
 
 export default function Document({ title, auth, data: data_document }) {
     const [data, setData] = useState(data_document);
+    const [tahun, setTahun] = useState(moment().format("YYYY"));
     const [search, setSearch] = useState("");
+    const [itemOffset, setItemOffset] = useState(0);
+    const [currentItems, setCurrentItems] = useState([]);
+    const [pageCount, setPageCount] = useState(0);
+    const [Loading, setLoading] = useState(false);
+    const [page, setPage] = useState(12);
     const [dataModal, setDataModal] = useState([]);
+
+    useEffect(() => {
+        setLoading(true);
+        const filterDataTahun = data.filter(
+            (item) => moment(item.tanggal_surat).format("YYYY") === tahun
+        );
+
+        const endOffset = parseInt(itemOffset) + parseInt(page);
+        const sortData = filterDataTahun
+            .sort((a, b) => {
+                return a.id - b.id;
+            })
+            .slice(itemOffset, endOffset);
+        setCurrentItems(sortData);
+        setPageCount(Math.ceil(filterDataTahun.length / page));
+        setLoading(false);
+    }, [itemOffset, data, page, tahun]);
+
+    const handlePageClick = (event) => {
+        window.scrollTo({
+            top: 60,
+            behavior: "smooth",
+        });
+
+        const newOffset = (event.selected * page) % data.length;
+
+        setItemOffset(newOffset);
+    };
 
     useEffect(() => {
         setData(data_document);
     }, [data_document]);
 
-    const handleSearch = () => {
+    useEffect(() => {
         if (search === "") {
             setData(data_document);
         } else {
@@ -26,7 +60,19 @@ export default function Document({ title, auth, data: data_document }) {
             );
             setData(filteredData);
         }
-    };
+    }, [search]);
+
+    // useEffect(() => {
+    //     if (tahun === "") {
+    //         setData(data_document);
+    //     } else {
+    //         const filteredData = data_document.filter((item) =>
+    //             moment(item.tanggal_surat).format("YYYY") === tahun
+    //         );
+    //         setData(filteredData);
+    //     }
+    // }, [tahun]);
+
     return (
         <Layout title={title} user={auth?.user}>
             <Add />
@@ -44,13 +90,38 @@ export default function Document({ title, auth, data: data_document }) {
                             className="w-full border-2 border-gray-300 rounded-md p-2"
                         />
                     </div>
+                    {/* select sort tahun */}
                     <div className="w-1/2">
-                        <button
-                            className="btn bg-teal-500 text-white rounded-md"
-                            onClick={handleSearch}
+                        <select
+                            value={tahun}
+                            onChange={(e) => setTahun(e.target.value)}
+                            className="w-full border-2 border-gray-300 rounded-md p-2"
                         >
-                            Cari
-                        </button>
+                            <option value={moment().format("YYYY")}>
+                                {moment().format("YYYY")}
+                            </option>
+                            <option
+                                value={moment()
+                                    .subtract(1, "years")
+                                    .format("YYYY")}
+                            >
+                                {moment().subtract(1, "years").format("YYYY")}
+                            </option>
+                            <option
+                                value={moment()
+                                    .subtract(2, "years")
+                                    .format("YYYY")}
+                            >
+                                {moment().subtract(2, "years").format("YYYY")}
+                            </option>
+                            <option
+                                value={moment()
+                                    .subtract(3, "years")
+                                    .format("YYYY")}
+                            >
+                                {moment().subtract(3, "years").format("YYYY")}
+                            </option>
+                        </select>
                     </div>
                 </div>
                 <div className="fixed bottom-10 right-10 z-20">
@@ -62,9 +133,9 @@ export default function Document({ title, auth, data: data_document }) {
                         Tambah
                     </button>
                 </div>
-                {data.map((item, index) => (
+                {currentItems.map((item, index) => (
                     <div
-                        className="card w-[20rem] bg-teal-500 relative shadow-sh-box"
+                        className="card w-[15rem] bg-teal-500 relative shadow-sh-box"
                         key={index}
                     >
                         <div className="dropdown dropdown-bottom dropdown-end">
@@ -105,7 +176,17 @@ export default function Document({ title, auth, data: data_document }) {
                         <div className="card-body">
                             <h2 className="card-title">{item.title}</h2>
                             <p className=" line-clamp-3">{item.keterangan}</p>
-                            <div className="card-actions justify-end">
+                            <div className="card-actions justify-between items-center">
+                                <div className="flex flex-col gap-1">
+                                    <span className="text-xs text-white">
+                                        Tanggal Surat
+                                    </span>
+                                    <span className="text-xs text-white">
+                                        {moment(item.tanggal_surat).format(
+                                            "LL"
+                                        )}
+                                    </span>
+                                </div>
                                 <button
                                     className="btn rounded-md text-xs"
                                     onClick={() =>
@@ -121,6 +202,28 @@ export default function Document({ title, auth, data: data_document }) {
                         </div>
                     </div>
                 ))}
+            </div>
+            <div className="flex justify-center items-center py-5">
+                <ReactPaginate
+                    className="flex flex-row gap-1 w-full justify-center items-center select-none pr-10"
+                    nextLabel="Next"
+                    onPageChange={handlePageClick}
+                    pageRangeDisplayed={2}
+                    marginPagesDisplayed={1}
+                    pageCount={pageCount}
+                    previousLabel="Previous"
+                    pageClassName=" text-sm border  p-2 rounded-md "
+                    pageLinkClassName=" rounded-md  px-2 py-2 font-semibold font-roboto"
+                    previousClassName=" p-2 rounded-md shadow-sh-box-sm bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
+                    previousLinkClassName="text-xs p-2  font-semibold font-roboto"
+                    nextClassName=" p-2 rounded-md shadow-sh-box-sm bg-teal-600 text-white hover:scale-105 hover:scale text-xs"
+                    nextLinkClassName="text-xs p-2  font-semibold font-roboto "
+                    breakLabel="..."
+                    breakClassName=" p-2 rounded-md text-teal-600"
+                    breakLinkClassName="text-sm font-semibold font-roboto "
+                    containerClassName="pagination"
+                    activeClassName=" bg-transparan border border-yellow-600 text-yellow-600"
+                />
             </div>
         </Layout>
     );

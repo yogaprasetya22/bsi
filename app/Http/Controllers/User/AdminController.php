@@ -49,6 +49,8 @@ class AdminController extends Controller
             'file' => 'required|max:10048',
             'title' => 'required',
             'keterangan' => 'required',
+            'tanggal_surat' => 'required',
+            'no_surat' => 'required',
         ]);
 
         $file = $request->file('file');
@@ -61,6 +63,8 @@ class AdminController extends Controller
             'title' => $request->title,
             'keterangan' => $request->keterangan,
             'file' => $file_name,
+            'tanggal_surat' => $request->tanggal_surat,
+            'no_surat' => $request->no_surat
         ]);
 
         return redirect()->back()->with('success', 'Document berhasil di upload');
@@ -72,10 +76,14 @@ class AdminController extends Controller
             'id' => 'required',
             'title' => 'required',
             'keterangan' => 'required',
+            'tanggal_surat' => 'required',
+            'no_surat' => 'required',
         ], [
             'id.required' => 'ID tidak boleh kosong',
             'title.required' => 'Title tidak boleh kosong',
             'keterangan.required' => 'Keterangan tidak boleh kosong',
+            'tanggal_surat.required' => 'Tanggal Surat tidak boleh kosong',
+            'no_surat.required' => 'No Surat tidak boleh kosong',
         ]);
 
         if ($request->hasFile('file')) {
@@ -95,12 +103,16 @@ class AdminController extends Controller
                 'title' => $request->title,
                 'keterangan' => $request->keterangan,
                 'file' => $file_name,
+                'tanggal_surat' => $request->tanggal_surat,
+                'no_surat' => $request->no_surat
             ]);
         } else {
             $document = Document::find($request->id);
             $document->update([
                 'title' => $request->title,
                 'keterangan' => $request->keterangan,
+                'tanggal_surat' => $request->tanggal_surat,
+                'no_surat' => $request->no_surat
             ]);
         }
 

@@ -13,6 +13,8 @@ class Document extends Model
         'title',
         'keterangan',
         'file',
+        'tanggal_surat',
+        'no_surat',
     ];
 
     protected $casts = [
