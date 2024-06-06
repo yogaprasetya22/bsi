@@ -19,7 +19,7 @@ return new class extends Migration
             $table->string('keterangan');
             $table->string('file');
             $table->date('tanggal_surat');
-            $table->date('tanggal_terima');
+            $table->date('tanggal_terima')->nullable();
             $table->timestamps();
         });
     }

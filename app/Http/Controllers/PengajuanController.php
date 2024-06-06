@@ -34,13 +34,11 @@ class PengajuanController extends Controller
             'no_surat' => 'required',
             'keterangan' => 'required',
             'tanggal_surat' => 'required',
-            'tanggal_terima' => 'required',
             'file' => 'required|mimes:pdf,doc,docx|max:10048', // Sesuaikan jenis dan ukuran file yang diizinkan
         ], [
             'no_surat.required' => 'No Surat harus diisi',
             'keterangan.required' => 'Keterangan harus diisi',
             'tanggal_surat.required' => 'Tanggal Surat harus diisi',
-            'tanggal_terima.required' => 'Tanggal Terima harus diisi',
             'file.required' => 'File harus diisi',
             'file.mimes' => 'File harus berupa pdf, doc, docx',
             'file.max' => 'Ukuran file maksimal 10MB',
@@ -64,7 +62,6 @@ class PengajuanController extends Controller
             'no_surat' => $request->no_surat,
             'keterangan' => $request->keterangan,
             'tanggal_surat' => $request->tanggal_surat,
-            'tanggal_terima' => $request->tanggal_terima,
             'file' => $renameFile,
         ]);
 
@@ -112,7 +109,8 @@ class PengajuanController extends Controller
                 $file->move(public_path(
                     'uploads/feedback/'
                 ), $renameFile);
-
+                $pengajuan->tanggal_terima = date('Y-m-d');
+                $pengajuan->save();
                 FeedbackPengajuan::create([
                     'pengajuan_uuid' => $pengajuan->uuid,
                     'feedback' => $request->feedback,
@@ -146,6 +144,8 @@ class PengajuanController extends Controller
         if ($request->feedback) {
             $feedback = FeedbackPengajuan::where('pengajuan_uuid', $request->uuid)->first();
             if (!$feedback) {
+                $pengajuan->tanggal_terima = date('Y-m-d');
+                $pengajuan->save();
                 FeedbackPengajuan::create([
                     'pengajuan_uuid' => $pengajuan->uuid,
                     'feedback' => $request->feedback,
@@ -154,6 +154,8 @@ class PengajuanController extends Controller
                     'tanggal_feedback' => date('Y-m-d'),
                 ]);
             } else {
+                $pengajuan->tanggal_terima = date('Y-m-d');
+                $pengajuan->save();
                 FeedbackPengajuan::where('pengajuan_uuid', $request->uuid)
                     ->update([
                         'feedback' => $request->feedback,
@@ -167,6 +169,8 @@ class PengajuanController extends Controller
 
             $feedback = FeedbackPengajuan::where('pengajuan_uuid', $request->uuid)->first();
             if (!$feedback) {
+                $pengajuan->tanggal_terima = date('Y-m-d');
+                $pengajuan->save();
                 FeedbackPengajuan::create([
                     'pengajuan_uuid' => $pengajuan->uuid,
                     'feedback' => null,
@@ -190,12 +194,10 @@ class PengajuanController extends Controller
             'no_surat' => 'required',
             'keterangan' => 'required',
             'tanggal_surat' => 'required',
-            'tanggal_terima' => 'required',
         ], [
             'no_surat.required' => 'No Surat harus diisi',
             'keterangan.required' => 'Keterangan harus diisi',
             'tanggal_surat.required' => 'Tanggal Surat harus diisi',
-            'tanggal_terima.required' => 'Tanggal Terima harus diisi',
         ]);
 
         $pengajuan = Pengajuan::where('uuid', $request->uuid)->first();
@@ -217,15 +219,14 @@ class PengajuanController extends Controller
                 'no_surat' => $request->no_surat,
                 'keterangan' => $request->keterangan,
                 'tanggal_surat' => $request->tanggal_surat,
-                'tanggal_terima' => $request->tanggal_terima,
                 'file' => $renameFile,
+
             ]);
         } else {
             $pengajuan->update([
                 'no_surat' => $request->no_surat,
                 'keterangan' => $request->keterangan,
                 'tanggal_surat' => $request->tanggal_surat,
-                'tanggal_terima' => $request->tanggal_terima,
             ]);
         }
 

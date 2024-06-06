@@ -54,7 +54,7 @@ export default function History({ title, auth, data }) {
                     item.keterangan
                         .toLowerCase()
                         .includes(search.toLowerCase()) ||
-                    item.tanggal_surat
+                    item?.tanggal_surat
                         .toLowerCase()
                         .includes(search.toLowerCase())
             );
@@ -125,9 +125,11 @@ export default function History({ title, auth, data }) {
                                         )}
                                     </td>
                                     <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        {moment(item.tanggal_terima).format(
-                                            "DD MMMM YYYY"
-                                        )}
+                                        {item.tanggal_terima
+                                            ? moment(
+                                                  item.tanggal_terima
+                                              ).format("DD MMMM YYYY")
+                                            : "-"}
                                     </td>
                                     <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                                         <button

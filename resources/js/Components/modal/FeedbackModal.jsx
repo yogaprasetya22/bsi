@@ -75,7 +75,7 @@ export default function FeedbackModal({ data: data_feedback }) {
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
-                                        {data_feedback?.file ? (
+                                        {data_feedback?.pengajuan?.file ? (
                                             <button
                                                 className="hover:text-teal-500 p-2 hover:border-b-2 border-teal-500"
                                                 onClick={() =>

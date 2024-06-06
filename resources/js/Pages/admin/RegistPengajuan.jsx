@@ -17,8 +17,8 @@ export default function RegistPengajuan({ title, auth, data }) {
 
     useEffect(() => {
         setLoading(true);
-        const filterDataTahun = data.filter((item) =>
-            moment(item.tanggal_surat).format("YYYY") === tahun
+        const filterDataTahun = data.filter(
+            (item) => moment(item.tanggal_surat).format("YYYY") === tahun
         );
 
         const endOffset = parseInt(itemOffset) + parseInt(page);
@@ -30,7 +30,7 @@ export default function RegistPengajuan({ title, auth, data }) {
         setCurrentItems(sortData);
         setPageCount(Math.ceil(filterDataTahun.length / page));
         setLoading(false);
-    }, [itemOffset, data, page,tahun]);
+    }, [itemOffset, data, page, tahun]);
 
     const handlePageClick = (event) => {
         window.scrollTo({
@@ -98,9 +98,6 @@ export default function RegistPengajuan({ title, auth, data }) {
                                     Tanggal Surat
                                 </th>
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
-                                    Tanggal Terima
-                                </th>
-                                <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
                                     File
                                 </th>
                                 <th className="border-x text-xs font-medium uppercase tracking-wider text-center">
@@ -122,11 +119,6 @@ export default function RegistPengajuan({ title, auth, data }) {
                                     </td>
                                     <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
                                         {moment(item.tanggal_surat).format(
-                                            "DD MMMM YYYY"
-                                        )}
-                                    </td>
-                                    <td className="border-x text-xs font-medium text-gray-500 uppercase tracking-wider text-center">
-                                        {moment(item.tanggal_terima).format(
                                             "DD MMMM YYYY"
                                         )}
                                     </td>

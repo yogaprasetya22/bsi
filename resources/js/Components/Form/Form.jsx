@@ -10,7 +10,6 @@ export default function Form() {
         no_surat: "",
         keterangan: "",
         tanggal_surat: "",
-        tanggal_terima: "",
         file: "",
     });
     const submitForm = (e) => {
@@ -19,7 +18,6 @@ export default function Form() {
         formData.append("no_surat", data.no_surat);
         formData.append("keterangan", data.keterangan);
         formData.append("tanggal_surat", data.tanggal_surat);
-        formData.append("tanggal_terima", data.tanggal_terima);
         formData.append("file", data.file);
         post(route("client.pengajuan.store"), {
             preserveScroll: true,
@@ -119,7 +117,6 @@ export default function Form() {
 
     return (
         <div className="w-full bg-white p-5 rounded-lg shadow-sh-box border-2">
-            {/* form berisi no surat, keterangan, tanggal surat, terima */}
             <form onSubmit={submitForm} className="flex flex-col gap-3">
                 <div className="flex flex-col gap-1">
                     <InputLabel htmlFor="no_surat" value="No Surat" />
@@ -146,49 +143,23 @@ export default function Form() {
                     ></textarea>
                     <InputError message={errors.keterangan} className="mt-2" />
                 </div>
-                <div className="flex flex-row gap-5 ">
-                    <div className="flex flex-col gap-1 select-none w-full">
-                        <InputLabel
-                            htmlFor="tanggal_surat"
-                            value="Tanggal Surat"
-                        />
-                        <TextInput
-                            type="date"
-                            id="tanggal_surat"
-                            value={data.tanggal_surat}
-                            autoComplete="no_surat"
-                            isFocused={true}
-                            onChange={(e) =>
-                                setData("tanggal_surat", e.target.value)
-                            }
-                            className="w-full rounded-md border border-gray-500 p-2 select-none"
-                        />
-                        <InputError
-                            message={errors.tanggal_surat}
-                            className="mt-2"
-                        />
-                    </div>
-                    <div className="flex flex-col gap-1 select-none w-full">
-                        <InputLabel
-                            htmlFor="tanggal_terima"
-                            value="Tanggal Terima"
-                        />
-                        <TextInput
-                            type="date"
-                            id="tanggal_terima"
-                            value={data.tanggal_terima}
-                            autoComplete="tanggal_terima"
-                            isFocused={true}
-                            onChange={(e) =>
-                                setData("tanggal_terima", e.target.value)
-                            }
-                            className="w-full rounded-md border border-gray-500 p-2 select-none"
-                        />
-                        <InputError
-                            message={errors.tanggal_terima}
-                            className="mt-2"
-                        />
-                    </div>
+                <div className="flex flex-col gap-1 select-none w-full">
+                    <InputLabel htmlFor="tanggal_surat" value="Tanggal Surat" />
+                    <TextInput
+                        type="date"
+                        id="tanggal_surat"
+                        value={data.tanggal_surat}
+                        autoComplete="no_surat"
+                        isFocused={true}
+                        onChange={(e) =>
+                            setData("tanggal_surat", e.target.value)
+                        }
+                        className="w-full rounded-md border border-gray-500 p-2 select-none"
+                    />
+                    <InputError
+                        message={errors.tanggal_surat}
+                        className="mt-2"
+                    />
                 </div>
                 <div className="flex flex-col gap-1">
                     <InputLabel htmlFor="file" value="File" />{" "}

@@ -17,8 +17,6 @@ export default function AproveModal({ data: data_regist }) {
         pic: "",
     });
 
-    console.log(data_regist);
-
     useEffect(() => {
         setData({
             uuid: data_regist?.uuid,
@@ -102,9 +100,11 @@ export default function AproveModal({ data: data_regist }) {
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
-                                        {moment(
-                                            data_regist?.tanggal_terima
-                                        ).format("DD MMMM YYYY")}
+                                        {data_regist.tanggal_terima
+                                            ? moment(
+                                                  data_regist?.tanggal_terima
+                                              ).format("DD MMMM YYYY")
+                                            : "-"}
                                     </td>
                                 </tr>
                                 <tr className="border-b">
