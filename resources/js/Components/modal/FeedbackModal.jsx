@@ -63,10 +63,11 @@ export default function FeedbackModal({ data: data_feedback }) {
                                     </td>
                                     <td className="pr-2">:</td>
                                     <td className="py-2">
-                                        {moment(
-                                            data_feedback?.pengajuan
-                                                ?.tanggal_terima
-                                        ).format("DD MMMM YYYY")}
+                                        {data_feedback.tanggal_terima
+                                            ? moment(
+                                                  data_feedback.tanggal_terima
+                                              ).format("DD MMMM YYYY")
+                                            : "-"}
                                     </td>
                                 </tr>
                                 <tr className="border-b">
